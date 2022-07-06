@@ -23,12 +23,29 @@ $ curl -s 'https://raw.githubusercontent.com/alessandroargentieri/git-aliases/ma
 You can take advantage of the git aliases!
 
 ```bash
+# checkout on a branch you partially remember the name!
 $ git checkabout oauth2
 Switched to branch feature/DASH-123_implementing-oauth2-on-rest-services
 
+# check which commits your local branch is behind the remote one!
 $ git behind
 1068a729b fix on login service
 8fb60506a update dependencies
+
+# add only modified files (not untracked ones)!
+$ git addmod
+
+# stage tracked and untracked files with a message!
+$ git wip 'oauth2-wip'
+
+# re-apply the changes based on the message!
+$ git wip-apply 'oauth2-wip'
+
+# get the latest semantic versioning tag
+$ git lasttag
+v1.2.3
+
+# ... and many more...
 ```
 
 ## Documentation
