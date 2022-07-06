@@ -1,6 +1,16 @@
 # Git aliases
 
-A series of stunning git aliases to improve your productiviy while using git with your terminal.
+```text
+ ▄▄▄▄▄▄▄ ▄▄▄ ▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄ ▄▄▄     ▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄ 
+█       █   █       █  █       █   █   █   █      █       █       █       █
+█   ▄▄▄▄█   █▄     ▄█  █   ▄   █   █   █   █  ▄   █  ▄▄▄▄▄█    ▄▄▄█  ▄▄▄▄▄█
+█  █  ▄▄█   █ █   █    █  █▄█  █   █   █   █ █▄█  █ █▄▄▄▄▄█   █▄▄▄█ █▄▄▄▄▄ 
+█  █ █  █   █ █   █    █       █   █▄▄▄█   █      █▄▄▄▄▄  █    ▄▄▄█▄▄▄▄▄  █
+█  █▄▄█ █   █ █   █    █   ▄   █       █   █  ▄   █▄▄▄▄▄█ █   █▄▄▄ ▄▄▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▄▄█ █▄▄▄█    █▄▄█ █▄▄█▄▄▄▄▄▄▄█▄▄▄█▄█ █▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█▄▄▄▄▄▄▄█
+```
+
+A series of stunning git aliases to improve your productivity while using git with your terminal.
 
 ## Install the aliases
 
