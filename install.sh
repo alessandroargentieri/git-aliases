@@ -121,105 +121,103 @@ git config --global alias.wip '!f() { git stash save $1 -u ; }; f'
 # $ git wip-apply 'DASH-123'
 git config --global alias.wip-apply '!f() { temp=$(git stash list | cut -d ':' -f 3 | grep -n -w $1 | cut -d ':' -f 1) ; stashnum=$((temp-1)) ; stashname=$(echo stash@{$stashnum}) ; git stash apply $stashname ; }; f'     # git wip-apply 'embeddedTomcat'
 
-# add alias per vedere di quali commit il branch corrente e' indietro rispetto al branch specificato
+# commits-behind, see which commits your current local branch is behind the specified remote one (remote or local)
 # usage:
-# $ git
-git config --global alias.commits-behind '!f() { git fetch -tp > /dev/null 2>&1; git log --oneline $(git branch --show-current)..$1; }; f'
+# $ git commits-behind master
+# $ git commits-behind origin/develop
+git config --global alias.commits-behind '!f() { git fetch -tpf > /dev/null 2>&1; git log --oneline $(git branch --show-current)..$1; }; f'
 
-# add alias per vedere di quali commit il branch corrente e quello branch specificato differiscono
+# commits-diff, see the which are the commits the current branch and the specified branch (local or remote) differ
 # usage:
-# $ git
-git config --global alias.commits-diff '!f() { git fetch -tp > /dev/null 2>&1; git log --oneline $(git branch --show-current)...$1; }; f'
+# $ git commits-diff master
+# $ git commits-diff origin/master
+git config --global alias.commits-diff '!f() { git fetch -tpf > /dev/null 2>&1; git log --oneline $(git branch --show-current)...$1; }; f'
 
-# add alias per fare il checkout su un branch di cui ricordiamo solo parzialmente il nome
+# checkabout, checkout on a branch for which you only partially remember the name
 # usage:
-# $ git
-# es. 
-#       $ git checkabout predicate
-#       Switched to branch feature/set-predicate
-# if more branches are found, gets just the first
+# $ git checkabout oauth2
+# Switched to branch feature/DASH-123_implementing-oauth2-rest-services
+# N.B. if more branches are found, it optimistically checkout on the first one
 git config --global alias.checkabout '!f() { git checkout `git branch | grep $1 | head -1 | cut -d "*" -f 2`;}; f'   
 
-# add alias per avere il nome del branch corrente
+# branch-name, returns the name of the current branch
 # usage:
-# $ git
+# $ git branch-name
 git config --global alias.branch-name 'branch --show-current'
 
-# add alias per pushare su un nuovo branch settando l'upstream
-# equivalente a: git push -u origin feature/blabla
+# pushnew, push a new branch setting the upstream (equivalent to: git push -u origin `git branch --show-current`)
 # usage:
-# $ git
+# $ git pushnew
 git config --global alias.pushnew '!f() { git push -u origin `git branch --show-current`;  }; f'  
 
-# add alias per avere la data di un tag  (git tag-date v1.5.3)
+# tag-date, returns the date of a tag
 # usage:
-# $ git
+# $ git tag-date v1.2.3
 git config --global alias.tag-date  '!f() { git log --tags --simplify-by-decoration --pretty="format:%ci %d" | grep $1; }; f'
 
-# add alias per vedere di quali commit il branch corrente e' andato avanti
+# behind, returns what commits the remote branch is ahead of your current local one
 # usage:
-# $ git
-git config --global alias.behind '!f() { git fetch -tp &>/dev/null; export BRANCH_NAME=$(git branch --show-current); git log --oneline $BRANCH_NAME..origin/${BRANCH_NAME}; }; f'
+# $ git behind
+git config --global alias.behind '!f() { git fetch -tpf &>/dev/null; export BRANCH_NAME=$(git branch --show-current); git log --oneline $BRANCH_NAME..origin/${BRANCH_NAME}; }; f'
 
-# add alias per vedere i file modificati tra due commit (buono per i merge)
+# commit-diff, returns which files have been modified between two commits
 # usage:
-# $ git
+# $ git commit-diff <sha1> <sha2>
 git config --global alias.commit-diff 'diff --name-status'
 
-# add alias per fare reset hard anche dei file e cartelle untracked
+# reset-hard, does a reset --hard and removed untracked files and folders
 # usage:
-# $ git
+# $ git reset-hard
 git config --global alias.reset-hard '!f() { git reset --hard; git clean -df ; }; f'
 
-# add alias per conoscere username e email registrati
+# whoami, returns username and email registered with git
 # usage:
-# $ git
+# $ git whoami
 git config --global alias.whoami '!f() { echo "`git config user.name` `git config user.email`"; }; f'
 
-# add alias per conoscere l'url del remote associato
+# get-url, returns the url of the associated remote (it supposes it's named 'origin')
 # usage:
-# $ git
+# $ git get-url
 git config --global alias.get-url 'config --get remote.origin.url'
 
-# add alias per sovrascrivere l'url del remote associato
+# set-url, sets the remote url (it supposes it's named 'origin')
 # usage:
-# $ git
+# $ git set-url https://<username>:<token>@github.com/<accountname>/<reponame>
 git config --global alias.set-url '!f() { git remote set-url origin $1 ; }; f'
 
-# add alias per sovrascrivere l'url del remote associato specificando il remote name
+# set-remote-url, sets the remote url
 # usage:
-# $ git
+# $ git set-remote-url <remote-name> https://<username>:<token>@github.com/<accountname>/<reponame>
 git config --global alias.set-remote-url '!f() { git remote set-url $1 $2 ; }; f'
 
-# add alias per conoscere l'url del remote specificando il remote name
+# get-remote-url, returns the url of the associated remote 
 # usage:
-# $ git
+# $ git get-remote-url <remote-name>
 git config --global alias.get-remote-url '!f() { git config --get remote.$1.url; }; f'
 
-# add alias per pushare da un branch remoto all'altro senza portarli in locale e creando un NUOVO branch o forzandone uno remoto esistente
-# esempio: git remote2remote my_remote_branch new_branch
+# remote2remote, push a remote branch into another one (which exists or not), without cloning locally 
 # usage:
-# $ git
-git config --global alias.remote2remote '!f() { git fetch -tp &>/dev/null; git checkout origin/$1 &> /dev/null; git push -f origin HEAD:refs/heads/$2; git checkout - > /dev/null; }; f'
+# $ git remote2remote my_remote_branch new_branch
+git config --global alias.remote2remote '!f() { git fetch -tpf &>/dev/null; git checkout origin/$1 &>/dev/null; git push -f origin HEAD:refs/heads/$2; git checkout - > /dev/null; }; f'
 
-# add alias per resettare l'autore dell'ultimo commit
+# reset-author, resets last commit's author
 # usage:
-# $ git
-git config --global alias.reset-author '!f() { git config user.email alexmawashi87@gmail.com; git config user.name "alessandroargentieri"; git commit --amend --reset-author; }; f'
+# $ git reset-author <name> <email>
+git config --global alias.reset-author '!f() { git config user.email ${2}; git config user.name "${1}"; git commit --amend --reset-author; }; f'
 
-# add alias per avere la lista degli alias
+# aliases, returns the list of all git aliases
 # usage:
-# $ git
+# $ git aliases
 git config --global alias.aliases '!f() { git config --get-regexp "^alias\." | cut -d " " -f 1 | cut -d "." -f 2 ; }; f'
 
-# add alias per avere la descrizione di un alias 
+# get-alias, returns the details of a specific alias
 # usage:
-# $ git
+# $ git get-alias <alias-name>
 git config --global alias.get-alias '!f() { git config --get-regexp "^alias\." | grep $1 ; }; f'
 
-# add alias per fare una release tramite un tag (git release --patch --snapshot)
-# usage:
-# $ git
+# release, allows doing a release through a tag
+# to get the usage:
+# $ git release --usage
 git config --global alias.release '!f() {                      
     RESET=`tput sgr0`
     GREEN=`tput setaf 2`
