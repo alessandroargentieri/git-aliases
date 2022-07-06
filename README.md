@@ -45,6 +45,9 @@ $ git wip-apply 'oauth2-wip'
 $ git lasttag
 v1.2.3
 
+# push force a remote branch into another (new or existing) WITHOUT cloning it locally!
+$ git remote2remote feature1 feature1-backup
+
 # ... and many more...
 ```
 
