@@ -1,33 +1,44 @@
 #! /bin/bash
 
-# add alias per lasttag (es. v1.4.6)
+# lasttag, returns the last tag according to the semantic versioning
 # usage:
-# $ git
+# $ git lasttag
+# v1.4.6
 git config --global alias.lasttag '!f() { git fetch -tp &>/dev/null; git tag -l v* --sort=v:refname | tail -1; }; f'
 
-# add alias per avere la lista dei tag locali o remoti (git tags, git tags -r, git tags --remote)
-# usage:
-# $ git
-git config --global alias.tags '!f() { if [ "$1" == "-r" ] || [ "$1" == "--remote" ]; then git ls-remote --tags origin;  else git tag; fi; }; f'
 
-# add alias per git ls
-# si puo' specificare un altro branch: $ git ls develop
+# lasttag-env, returns the last tag for the specified environment (qa, dev, prod, test)
 # usage:
-# $ git
+# $ git lasttag-env qa
+# qa-v1.3.4
+git config --global alias.lasttag '!f() { git tag -l ${1}-v* --sort=v:refname | tail -1; }; f'
+poi fare
+git lasttag qa
+
+# tags, list of local or remote tags
+# usage:
+# $ git tags
+# $ git tags -r
+# $ git tags --remote 
+git config --global alias.tags '!f() { git fetch -t; if [ "$1" == "-r" ] || [ "$1" == "--remote" ]; then git ls-remote --tags origin; else git tag; fi; }; f'
+
+# ls, better logging, showing the history tree with less bash command
+# usage:
+# $ git ls
+# $ git ls develop
 git config --global alias.ls '!f() { git log $1 --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cgreen\\ [%ae,%ar]" --decorate --graph; }; f'
 
-# add alias per git blame
-# usage git bl origin/develop -- path/to/the/file
+# bl, improved blame
 # usage:
-# $ git
+# $ git bl origin/develop -- path/to/the/file
 git config --global alias.bl 'blame -c --date=short'
 
-# add alias checkout short
+# ch, checkout
 # usage:
-# $ git
+# $ git ch master
 git config --global alias.ch 'checkout'
 
-# add alias status typo
+# typo aliases to manage errors while typing
 git config --global alias.st 'status'
 git config --global alias.statsu 'status'
 git config --global alias.stats 'status'
@@ -43,70 +54,71 @@ git config --global alias.psuh 'push'
 git config --global alias.psush 'psush'
 git config --global alias.brancg 'branch'
 
-# add alias merge
+# m, merge
 # usage:
-# $ git
+# $ git m feature/DASH-123
 git config --global alias.m 'merge' 
 
-# add alias branch
+# b, br, branch
 # usage:
-# $ git
+# $ git br -D branch-to-delete
 git config --global alias.b 'branch' 
 git config --global alias.br 'branch' 
 
-# add alias commit
+# com, commit
 # usage:
-# $ git
+# $ git com -m "message"
 git config --global alias.com 'commit' 
 
-# add alias add
+# a, add
 # usage:
-# $ git
+# $ git a .
 git config --global alias.a 'add' 
 
-# add alias tag
+# t, tag
 # usage:
-# $ git
+# $ git t v1.2.3
 git config --global alias.t 'tag' 
 
-# add alias fetch
+# f, fetch
 # usage:
-# $ git
+# $ git f -tpf
 git config --global alias.f 'fetch -tp' 
 
-# add alias to restore all staged files
+# unstage, restore all staged files
 # usage:
-# $ git
+# $ git unstage
 git config --global alias.unstage 'restore --staged .'
 
-# add alias to revert a merge
+# reverte-merge, reverts a merge returning on the principal branch
 # usage:
-# $ git
+# $ git revert-merge
 git config --global alias.revert-merge 'revert -m 1'. # git revert-merge  <merge-commit-hash>
 
-# add alias to compare to branches
+# x, compare branches
 # usage:
-# $ git
+# $ git x br1..br2
+# $ git x br1...br2
 git config --global alias.x 'log --oneline' # git x branch1..branch2
 
-# add alias to add only modified files
+# addmod, add to stage only modified files
 # usage:
-# $ git
+# $ git addmod
 git config --global alias.addmod '!f() { git ls-files --modified | xargs git add; }; f'
 
-# add alias per fare la creazione o il checkout di un branch
+# switch, checkout or creation of a new branch
 # usage:
-# $ git
+# $ git switch new-or-existing-branch
 git config --global alias.switch '!f() { git checkout $1 2>/dev/null || git checkout -b $1; }; f'
 
-# add alias per stashare anche i file untracked con un messaggio opzionale
+# wip, save a working in progress by stashing tracked and untracked files
 # usage:
-# $ git
-git config --global alias.wip '!f() { git stash save $1 -u ; }; f'       # git wip "saved working in progress on DASH-515"
+# $ git wip 'DASH-123'
+git config --global alias.wip '!f() { git stash save $1 -u ; }; f'
 
-# add alias per applicare uno stash dato il nome e non il numerello
+# wip-apply, apply a stash by its message
 # usage:
-# $ git
+# $ git wip-apply 'DASH-123'
 git config --global alias.wip-apply '!f() { temp=$(git stash list | cut -d ':' -f 3 | grep -n -w $1 | cut -d ':' -f 1) ; stashnum=$((temp-1)) ; stashname=$(echo stash@{$stashnum}) ; git stash apply $stashname ; }; f'     # git wip-apply 'embeddedTomcat'
 
 # add alias per vedere di quali commit il branch corrente e' indietro rispetto al branch specificato
