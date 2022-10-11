@@ -10,7 +10,7 @@ git config --global alias.lasttag '!f() { git fetch -tp &>/dev/null; git tag -l 
 # usage:
 # $ git lasttag-env qa
 # qa-v1.3.4
-git config --global alias.lasttag '!f() { git tag -l ${1}-v* --sort=v:refname | tail -1; }; f'
+git config --global alias.lasttag-env '!f() { git tag -l ${1}-v* --sort=v:refname | tail -1; }; f'
 
 # tags, list of local or remote tags
 # usage:
