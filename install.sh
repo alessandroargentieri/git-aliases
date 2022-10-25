@@ -192,6 +192,21 @@ git config --global alias.set-remote-url '!f() { git remote set-url $1 $2 ; }; f
 # $ git get-remote-url <remote-name>
 git config --global alias.get-remote-url '!f() { git config --get remote.$1.url; }; f'
 
+# set-token add the Github token to the origin remote url
+# usage:
+# $ git set-token
+# So when you do `git get-url` before launching this command you get: https://github.com/myorg/myrepo.git
+# After having launched the command you'l' get https://<YOUR-GITHUB-TOKEN-HERE>@github.com/myorg/myrepo.git
+# Substitute the <YOUR-GITHUB-TOKEN-HERE> with your real Github token
+git config --global alias.set-token '!f() {   
+   url=`git config --get remote.origin.url`
+   prefix=https://github.com
+   newprefix=https://<YOUR-GITHUB-TOKEN-HERE>@github.com
+   newurl=${url/$prefix/$newprefix}
+   git remote set-url origin $newurl
+}; f'
+
+
 # remote2remote, push a remote branch into another one (which exists or not), without cloning locally 
 # usage:
 # $ git remote2remote my_remote_branch new_branch
