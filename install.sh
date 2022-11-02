@@ -141,6 +141,11 @@ git config --global alias.checkabout '!f() { git checkout `git branch | grep $1 
 # usage:
 # $ git branch-name
 git config --global alias.branch-name 'branch --show-current'
+git config --global alias.current 'branch --show-current'
+git config --global alias.get-current 'branch --show-current'
+git config --global alias.current-branch 'branch --show-current'
+git config --global alias.branch-current 'branch --show-current'
+git config --global alias.get-branch 'branch --show-current'
 
 # pushnew, push a new branch setting the upstream (equivalent to: git push -u origin `git branch --show-current`)
 # usage:
