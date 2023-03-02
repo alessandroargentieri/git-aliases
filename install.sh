@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# clone: ovverride the standard clone with clone recursive
+git config --global alias.clone "clone --recursive"
+
 # lasttag, returns the last tag according to the semantic versioning
 # usage:
 # $ git lasttag
