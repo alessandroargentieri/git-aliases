@@ -3,6 +3,9 @@
 # clone: ovverride the standard clone with clone recursive
 git config --global alias.clone "clone --recursive"
 
+# commit: includes the commit signature by default in the commit message: Signed-off-by: alessandroargentieri <alessandro@myemail.com>
+git config --global alias.commit "comit -s"
+
 # lasttag, returns the last tag according to the semantic versioning
 # usage:
 # $ git lasttag
