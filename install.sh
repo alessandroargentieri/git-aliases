@@ -10,13 +10,13 @@ git config --global alias.commit "commit -s"
 # usage:
 # $ git lasttag
 # v1.4.6
-git config --global alias.lasttag '!f() { git fetch -tp &>/dev/null; git tag -l v* --sort=v:refname | tail -1; }; f'
+git config --global alias.lasttag '!f() { git fetch -tp &>/dev/null; git tag -l "v*" --sort=v:refname | tail -1; }; f'
 
 # lasttag-env, returns the last tag for the specified environment (qa, dev, prod, test)
 # usage:
 # $ git lasttag-env qa
 # qa-v1.3.4
-git config --global alias.lasttag-env '!f() { git tag -l ${1}-v* --sort=v:refname | tail -1; }; f'
+git config --global alias.lasttag-env '!f() { git tag -l "${1}-v*" --sort=v:refname | tail -1; }; f'
 
 # tags, list of local or remote tags
 # usage:
