@@ -109,6 +109,11 @@ git config --global alias.x 'log --oneline' # git x branch1..branch2
 # $ git addmod
 git config --global alias.addmod '!f() { git ls-files --modified | xargs git add; }; f'
 
+# common, checks what is the last common commit between the two specified
+# usage:
+# $ git common branch1 branch2
+git config --global alias.common 'merge-base'
+
 # switch, checkout or creation of a new branch
 # usage:
 # $ git switch new-or-existing-branch
