@@ -39,7 +39,7 @@ git config --global alias.bl 'blame -c --date=short'
 # ch, checkout
 # usage:
 # $ git ch master
-git config --global alias.ch 'checkout'
+# git config --global alias.ch 'checkout'
 
 # typo aliases to manage errors while typing
 git config --global alias.st 'status'
@@ -147,6 +147,18 @@ git config --global alias.commits-diff '!f() { git fetch -tpf > /dev/null 2>&1; 
 # Switched to branch feature/DASH-123_implementing-oauth2-rest-services
 # N.B. if more branches are found, it optimistically checkout on the first one
 git config --global alias.checkabout '!f() { git checkout `git branch | grep $1 | head -1 | cut -d "*" -f 2`;}; f'   
+
+# checkouts, lists the previous checkouts on the current repository
+# usage:
+# $ git checkouts
+git config --global alias.checkouts '!f() { i=0; count=0; while [ $? -eq 0 ] && [ $count -lt 10 ]; do i=$((i+1)); branch=$(git rev-parse --symbolic-full-name @{-$i} 2> /dev/null); [ -z "$branch" ] && break; count=$((count+1)); echo "$count. $branch"; done; }; f'
+
+# ch, improved version of checkout
+# usage:
+# $ git ch --
+# it's like $ git checkout @{-2}
+# $ git ch ---
+git config --global alias.ch '!f() { if [[ $1 == "--" ]]; then git checkout @{-2}; elif [[ $1 == "---" ]]; then git checkout @{-3}; else git checkout "$@"; fi; }; f'
 
 # branch-name, returns the name of the current branch
 # usage:
