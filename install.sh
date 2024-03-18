@@ -36,6 +36,11 @@ git config --global alias.ls '!f() { git log $1 --pretty=format:"%C(yellow)%h%Cr
 # $ git bl origin/develop -- path/to/the/file
 git config --global alias.bl 'blame -c --date=short'
 
+# check most recent commit to have modified a specific file
+# usage
+# $ git last-change path/to/file
+git config --global alias.last-change '!f() { git log -n 1 --pretty=format:"%h - %an, %ar : %s" -- $1; }; f'
+
 # ch, checkout
 # usage:
 # $ git ch master
