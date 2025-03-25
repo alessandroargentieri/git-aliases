@@ -10,7 +10,16 @@ git config --global alias.commit "commit -s"
 # usage:
 # $ git lasttag
 # v1.4.6
-git config --global alias.lasttag '!f() { git fetch -tp &>/dev/null; git tag -l "v*" --sort=v:refname | tail -1; }; f'
+# $ git lasttag lib/civostack-client
+# lib/civostack-client/v1.0.44
+git config --global alias.lasttag '!f() { 
+  prefix="v" 
+  if [ $# -gt 0 ]; then 
+    prefix="$1" 
+  fi; 
+  git fetch -tp &>/dev/null; 
+  git tag -l "${prefix}*" --sort=v:refname | tail -1; 
+}; f'
 
 # lasttag-env, returns the last tag for the specified environment (qa, dev, prod, test)
 # usage:
